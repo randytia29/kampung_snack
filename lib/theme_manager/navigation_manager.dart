@@ -26,4 +26,10 @@ extension Navigate on BuildContext {
 
   void toPageSlide(Widget page) =>
       Navigator.of(this).push(NavigateManager._routeTransition(page));
+
+  void toJumpPage(Widget page) => Navigator.of(this).pushReplacement(
+        MaterialPageRoute(
+          builder: (context) => page,
+        ),
+      );
 }
