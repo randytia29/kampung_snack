@@ -12,6 +12,7 @@ class CustomTextForm extends StatelessWidget {
     required this.title,
     this.textInputType,
     this.hintText,
+    this.paddingHorizontal,
   }) : super(key: key);
 
   final TextEditingController controller;
@@ -21,11 +22,12 @@ class CustomTextForm extends StatelessWidget {
   final String title;
   final TextInputType? textInputType;
   final String? hintText;
+  final double? paddingHorizontal;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 24),
+      padding: EdgeInsets.symmetric(horizontal: paddingHorizontal ?? 24),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

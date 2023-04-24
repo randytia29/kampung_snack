@@ -1,16 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kampung_snack/features/participant/cubit/form_participant_cubit.dart';
-import 'package:kampung_snack/features/participant/cubit/participant_cubit.dart';
 import 'package:kampung_snack/sl.dart';
-import 'package:kampung_snack/theme_manager/navigation_manager.dart';
 
-import 'package:kampung_snack/theme_manager/space_manager.dart';
 import 'package:kampung_snack/utils/image_pick_service.dart';
-import 'package:kampung_snack/widgets/custom_button.dart';
-import 'package:kampung_snack/widgets/custom_text_form.dart';
 
-import '../widgets/photo_participant.dart';
+import '../widgets/form_mobile_page.dart';
+import '../widgets/form_web_page.dart';
 
 class FormScreen extends StatefulWidget {
   const FormScreen({super.key});
@@ -54,72 +50,28 @@ class _FormScreenState extends State<FormScreen> {
         child: Form(
           key: _formKey,
           child: SingleChildScrollView(
-            child: Column(
-              children: [
-                80.0.spaceY,
-                PhotoParticipant(
-                  imagePickService: _imagePickService,
-                  formParticipantCubit: _formParticipantCubit,
-                ),
-                40.0.spaceY,
-                CustomTextForm(
-                  controller: _nameController,
-                  title: 'Nama',
-                  textInputAction: TextInputAction.next,
-                  validate: (value) {
-                    if ((value ?? '').isEmpty) {
-                      return 'Isi nama';
-                    } else {
-                      return null;
-                    }
-                  },
-                ),
-                24.0.spaceY,
-                CustomTextForm(
-                  controller: _addressController,
-                  title: 'Alamat',
-                  textInputAction: TextInputAction.next,
-                  validate: (value) {
-                    if ((value ?? '').isEmpty) {
-                      return 'Isi alamat';
-                    } else {
-                      return null;
-                    }
-                  },
-                ),
-                24.0.spaceY,
-                CustomTextForm(
-                  controller: _jobController,
-                  title: 'Pekerjaan',
-                  textInputAction: TextInputAction.next,
-                  validate: (value) {
-                    if ((value ?? '').isEmpty) {
-                      return 'Isi pekerjaan';
-                    } else {
-                      return null;
-                    }
-                  },
-                ),
-                32.0.spaceY,
-                CustomButton(
-                  text: 'Simpan',
-                  onTap: () async {
-                    if ((_formKey.currentState ?? FormState()).validate()) {
-                      _formParticipantCubit.editData(_nameController.text,
-                          _addressController.text, _jobController.text);
-
-                      final participant =
-                          _formParticipantCubit.state.participant;
-
-                      context
-                          .read<ParticipantCubit>()
-                          .addParticipant(participant);
-
-                      context.toBackScreen();
-                    }
-                  },
-                )
-              ],
+            child: LayoutBuilder(
+              builder: (context, constraints) {
+                if (constraints.maxWidth <= 600) {
+                  return FormMobilePage(
+                    imagePickService: _imagePickService,
+                    formParticipantCubit: _formParticipantCubit,
+                    nameController: _nameController,
+                    addressController: _addressController,
+                    jobController: _jobController,
+                    formKey: _formKey,
+                  );
+                } else {
+                  return FormWebPage(
+                    imagePickService: _imagePickService,
+                    formParticipantCubit: _formParticipantCubit,
+                    nameController: _nameController,
+                    addressController: _addressController,
+                    jobController: _jobController,
+                    formKey: _formKey,
+                  );
+                }
+              },
             ),
           ),
         ),

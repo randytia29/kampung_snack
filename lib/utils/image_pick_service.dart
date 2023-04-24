@@ -8,7 +8,7 @@ class ImagePickService {
 
   ImagePickService({required this.picker});
 
-  Future<File?> _pickImage(ImageSource source) async {
+  Future<File?> pickDefaultImage(ImageSource source) async {
     final xFile = await picker.pickImage(source: source);
 
     if (xFile == null) {
@@ -21,7 +21,7 @@ class ImagePickService {
   }
 
   Future<Uint8List?> pickMobileImage(ImageSource source) async {
-    final file = await _pickImage(source);
+    final file = await pickDefaultImage(source);
 
     if (file == null) {
       return null;

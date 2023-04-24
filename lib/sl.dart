@@ -2,6 +2,7 @@ import 'package:get_it/get_it.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:kampung_snack/features/participant/cubit/form_participant_cubit.dart';
 import 'package:kampung_snack/features/participant/cubit/participant_cubit.dart';
+import 'package:kampung_snack/features/participant/cubit/participant_web_cubit.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'features/auth/cubit/login_cubit.dart';
@@ -11,7 +12,7 @@ import 'utils/shared_pref.dart';
 
 final sl = GetIt.instance;
 
-Future<void> init() async {
+Future<void> init(bool kIsWeb) async {
   // Shared Preference
   final sharedPreferences = await SharedPreferences.getInstance();
 
@@ -24,7 +25,12 @@ Future<void> init() async {
 
   // Participant
   sl.registerFactory(() => FormParticipantCubit());
-  sl.registerLazySingleton(() => ParticipantCubit());
+
+  if (!kIsWeb) {
+    sl.registerLazySingleton(() => ParticipantCubit());
+  } else {
+    sl.registerLazySingleton(() => ParticipantWebCubit());
+  }
 
   // Repository
   // sl.registerLazySingleton<AuthRepository>(() => AuthRepositoryImpl(dio: sl()));

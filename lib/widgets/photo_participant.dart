@@ -3,6 +3,7 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 
 import '../features/participant/cubit/form_participant_cubit.dart';
 import '../theme_manager/asset_manager.dart';
@@ -41,10 +42,15 @@ class PhotoParticipant extends StatelessWidget {
                       AssetManager.noImage,
                       fit: BoxFit.cover,
                     )
-                  : Image.memory(
-                      Uint8List.fromList(image.codeUnits),
-                      fit: BoxFit.cover,
-                    ),
+                  : kIsWeb
+                      ? Image.network(
+                          image,
+                          fit: BoxFit.cover,
+                        )
+                      : Image.memory(
+                          Uint8List.fromList(image.codeUnits),
+                          fit: BoxFit.cover,
+                        ),
             );
           },
         ),
@@ -54,16 +60,27 @@ class PhotoParticipant extends StatelessWidget {
             backgroundColor: ColorManager.grey,
             child: IconButton(
               onPressed: () async {
-                final byteFile =
-                    await _imagePickService.pickMobileImage(ImageSource.camera);
+                if (kIsWeb) {
+                  final file = await _imagePickService
+                      .pickDefaultImage(ImageSource.gallery);
 
-                if (byteFile == null) {
-                  return;
+                  if (file == null) {
+                    return;
+                  }
+
+                  _formParticipantCubit.editImage(file.path);
+                } else {
+                  final byteFile = await _imagePickService
+                      .pickMobileImage(ImageSource.camera);
+
+                  if (byteFile == null) {
+                    return;
+                  }
+
+                  final imgString = String.fromCharCodes(byteFile);
+
+                  _formParticipantCubit.editImage(imgString);
                 }
-
-                final imgString = String.fromCharCodes(byteFile);
-
-                _formParticipantCubit.editImage(imgString);
               },
               icon: const Icon(Icons.camera_alt),
             ),
