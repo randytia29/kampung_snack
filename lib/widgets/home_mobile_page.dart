@@ -7,6 +7,7 @@ import '../features/participant/cubit/participant_cubit.dart';
 import '../screens/form_screen.dart';
 import '../theme_manager/color_manager.dart';
 import 'custom_button.dart';
+import 'participant_card.dart';
 
 class HomeMobilePage extends StatelessWidget {
   const HomeMobilePage({
@@ -23,9 +24,7 @@ class HomeMobilePage extends StatelessWidget {
         title: const Text('Donor Kuy'),
         actions: [
           IconButton(
-            onPressed: () {
-              _logoutCubit.startLogout();
-            },
+            onPressed: () => _logoutCubit.startLogout(),
             icon: const Icon(Icons.exit_to_app),
           )
         ],
@@ -37,7 +36,18 @@ class HomeMobilePage extends StatelessWidget {
               builder: (context, participantState) {
                 final participants = participantState.participants;
 
-                return Text('${participants.length}');
+                return GridView.count(
+                  mainAxisSpacing: 8,
+                  crossAxisSpacing: 8,
+                  childAspectRatio: 0.75,
+                  crossAxisCount: 2,
+                  children: participants
+                      .map(
+                        (participant) =>
+                            ParticipantCard(participant: participant),
+                      )
+                      .toList(),
+                );
               },
             ),
           ),
