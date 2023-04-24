@@ -39,12 +39,14 @@ class HomeMobilePage extends StatelessWidget {
                 return GridView.count(
                   mainAxisSpacing: 8,
                   crossAxisSpacing: 8,
-                  childAspectRatio: 0.75,
-                  crossAxisCount: 2,
+                  childAspectRatio: 0.65,
+                  crossAxisCount: 3,
                   children: participants
                       .map(
-                        (participant) =>
-                            ParticipantCard(participant: participant),
+                        (participant) => ParticipantCard(
+                          participant: participant,
+                          heightImage: 125,
+                        ),
                       )
                       .toList(),
                 );
