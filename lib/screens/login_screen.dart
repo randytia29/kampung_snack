@@ -48,7 +48,7 @@ class _LoginScreenState extends State<LoginScreen> {
         child: BlocListener<LoginCubit, LoginState>(
           listener: (BuildContext context, loginState) {
             if (loginState is LoginSuccess) {
-              context.toJumpPage(const HomeScreen());
+              context.toJumpScreen(const HomeScreen());
             }
           },
           child: Form(

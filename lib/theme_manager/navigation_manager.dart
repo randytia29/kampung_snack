@@ -18,18 +18,25 @@ class NavigateManager {
 }
 
 extension Navigate on BuildContext {
-  void toPage(Widget page) => Navigator.of(this).push(
+  void toScreen(Widget screen) => Navigator.of(this).push(
         MaterialPageRoute(
-          builder: (context) => page,
+          builder: (context) => screen,
         ),
       );
 
-  void toPageSlide(Widget page) =>
-      Navigator.of(this).push(NavigateManager._routeTransition(page));
+  void toScreenSlide(Widget screen) =>
+      Navigator.of(this).push(NavigateManager._routeTransition(screen));
 
-  void toJumpPage(Widget page) => Navigator.of(this).pushReplacement(
+  void toJumpScreen(Widget screen) => Navigator.of(this).pushReplacement(
         MaterialPageRoute(
-          builder: (context) => page,
+          builder: (context) => screen,
         ),
+      );
+
+  void toLoginScreen(Widget screen) => Navigator.of(this).pushAndRemoveUntil(
+        MaterialPageRoute(
+          builder: (context) => screen,
+        ),
+        (route) => false,
       );
 }
