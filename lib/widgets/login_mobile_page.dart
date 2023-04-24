@@ -25,49 +25,51 @@ class LoginMobilePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        const LoginTitle(),
-        32.0.spaceY,
-        CustomTextForm(
-          controller: _usernameController,
-          textInputAction: TextInputAction.next,
-          validate: (value) {
-            if ((value ?? '').isEmpty) {
-              return 'Isi username';
-            } else {
-              return null;
-            }
-          },
-          title: 'Username',
-          hintText: 'Isi apa saja',
-        ),
-        24.0.spaceY,
-        CustomTextForm(
-          controller: _passwordController,
-          obscureText: true,
-          validate: (value) {
-            if ((value ?? '').isEmpty) {
-              return 'Isi password';
-            } else {
-              return null;
-            }
-          },
-          title: 'Password',
-          hintText: 'Isi apa saja',
-        ),
-        24.0.spaceY,
-        CustomButton(
-          text: 'Login',
-          onTap: () {
-            if ((_formKey.currentState ?? FormState()).validate()) {
-              _loginCubit.startLogin(
-                  _usernameController.text, _passwordController.text);
-            }
-          },
-        ),
-      ],
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          80.0.spaceY,
+          const LoginTitle(),
+          32.0.spaceY,
+          CustomTextForm(
+            controller: _usernameController,
+            textInputAction: TextInputAction.next,
+            validate: (value) {
+              if ((value ?? '').isEmpty) {
+                return 'Isi username';
+              } else {
+                return null;
+              }
+            },
+            title: 'Username',
+            hintText: 'Isi apa saja',
+          ),
+          24.0.spaceY,
+          CustomTextForm(
+            controller: _passwordController,
+            obscureText: true,
+            validate: (value) {
+              if ((value ?? '').isEmpty) {
+                return 'Isi password';
+              } else {
+                return null;
+              }
+            },
+            title: 'Password',
+            hintText: 'Isi apa saja',
+          ),
+          24.0.spaceY,
+          CustomButton(
+            text: 'Login',
+            onTap: () {
+              if ((_formKey.currentState ?? FormState()).validate()) {
+                _loginCubit.startLogin(
+                    _usernameController.text, _passwordController.text);
+              }
+            },
+          ),
+        ],
+      ),
     );
   }
 }

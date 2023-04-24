@@ -47,17 +47,31 @@ class DetailWebPage extends StatelessWidget {
                               ),
                   ),
                   8.0.spaceX,
-                  Padding(
-                    padding: const EdgeInsets.only(top: 24),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(participant.name ?? '-'),
-                        8.0.spaceY,
-                        Text(participant.address ?? '-'),
-                        8.0.spaceY,
-                        Text(participant.job ?? '-')
-                      ],
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 24),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            participant.name ?? '-',
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                          8.0.spaceY,
+                          Text(
+                            participant.address ?? '-',
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                          8.0.spaceY,
+                          Text(
+                            participant.job ?? '-',
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          )
+                        ],
+                      ),
                     ),
                   )
                 ],
