@@ -28,6 +28,7 @@ class MyApp extends StatelessWidget {
               ),
       ],
       child: MaterialApp(
+        title: 'Donor Kuy',
         theme: getApplicationThemeData(),
         home: token == null ? const LoginScreen() : const HomeScreen(),
       ),
