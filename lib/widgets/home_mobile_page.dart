@@ -36,20 +36,26 @@ class HomeMobilePage extends StatelessWidget {
               builder: (context, participantState) {
                 final participants = participantState.participants;
 
-                return GridView.count(
-                  mainAxisSpacing: 8,
-                  crossAxisSpacing: 8,
-                  childAspectRatio: 0.65,
-                  crossAxisCount: 3,
-                  children: participants
-                      .map(
-                        (participant) => ParticipantCard(
-                          participant: participant,
-                          heightImage: 125,
-                        ),
-                      )
-                      .toList(),
-                );
+                if (participants.isEmpty) {
+                  return const Center(
+                    child: Text('Belum ada peserta'),
+                  );
+                } else {
+                  return GridView.count(
+                    mainAxisSpacing: 8,
+                    crossAxisSpacing: 8,
+                    childAspectRatio: 0.65,
+                    crossAxisCount: 3,
+                    children: participants
+                        .map(
+                          (participant) => ParticipantCard(
+                            participant: participant,
+                            heightImage: 125,
+                          ),
+                        )
+                        .toList(),
+                  );
+                }
               },
             ),
           ),

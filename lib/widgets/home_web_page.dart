@@ -21,7 +21,7 @@ class HomeWebPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Donor Kuy. Size: ${MediaQuery.of(context).size.width}'),
+        title: const Text('Donor Kuy'),
         actions: [
           IconButton(
             onPressed: () {
@@ -38,69 +38,75 @@ class HomeWebPage extends StatelessWidget {
               builder: (context, participantWebState) {
                 final participants = participantWebState.participants;
 
-                return LayoutBuilder(
-                  builder: (context, constraints) {
-                    if (constraints.maxWidth <= 850) {
-                      return GridView.count(
-                        mainAxisSpacing: 8,
-                        crossAxisSpacing: 8,
-                        childAspectRatio: 0.85,
-                        crossAxisCount: 3,
-                        children: participants
-                            .map(
-                              (participant) => ParticipantCard(
-                                participant: participant,
-                                heightImage: 125,
-                              ),
-                            )
-                            .toList(),
-                      );
-                    } else if (constraints.maxWidth <= 1100) {
-                      return GridView.count(
-                        mainAxisSpacing: 8,
-                        crossAxisSpacing: 8,
-                        crossAxisCount: 4,
-                        children: participants
-                            .map(
-                              (participant) => ParticipantCard(
-                                participant: participant,
-                                heightImage: 145,
-                              ),
-                            )
-                            .toList(),
-                      );
-                    } else if (constraints.maxWidth <= 1300) {
-                      return GridView.count(
-                        mainAxisSpacing: 8,
-                        crossAxisSpacing: 8,
-                        crossAxisCount: 5,
-                        children: participants
-                            .map(
-                              (participant) => ParticipantCard(
-                                participant: participant,
-                                heightImage: 145,
-                              ),
-                            )
-                            .toList(),
-                      );
-                    } else {
-                      return GridView.count(
-                        mainAxisSpacing: 8,
-                        crossAxisSpacing: 8,
-                        childAspectRatio: 0.75,
-                        crossAxisCount: 7,
-                        children: participants
-                            .map(
-                              (participant) => ParticipantCard(
-                                participant: participant,
-                                heightImage: 175,
-                              ),
-                            )
-                            .toList(),
-                      );
-                    }
-                  },
-                );
+                if (participants.isEmpty) {
+                  return const Center(
+                    child: Text('Belum ada peserta'),
+                  );
+                } else {
+                  return LayoutBuilder(
+                    builder: (context, constraints) {
+                      if (constraints.maxWidth <= 850) {
+                        return GridView.count(
+                          mainAxisSpacing: 8,
+                          crossAxisSpacing: 8,
+                          childAspectRatio: 0.85,
+                          crossAxisCount: 3,
+                          children: participants
+                              .map(
+                                (participant) => ParticipantCard(
+                                  participant: participant,
+                                  heightImage: 125,
+                                ),
+                              )
+                              .toList(),
+                        );
+                      } else if (constraints.maxWidth <= 1100) {
+                        return GridView.count(
+                          mainAxisSpacing: 8,
+                          crossAxisSpacing: 8,
+                          crossAxisCount: 4,
+                          children: participants
+                              .map(
+                                (participant) => ParticipantCard(
+                                  participant: participant,
+                                  heightImage: 145,
+                                ),
+                              )
+                              .toList(),
+                        );
+                      } else if (constraints.maxWidth <= 1300) {
+                        return GridView.count(
+                          mainAxisSpacing: 8,
+                          crossAxisSpacing: 8,
+                          crossAxisCount: 5,
+                          children: participants
+                              .map(
+                                (participant) => ParticipantCard(
+                                  participant: participant,
+                                  heightImage: 145,
+                                ),
+                              )
+                              .toList(),
+                        );
+                      } else {
+                        return GridView.count(
+                          mainAxisSpacing: 8,
+                          crossAxisSpacing: 8,
+                          childAspectRatio: 0.75,
+                          crossAxisCount: 7,
+                          children: participants
+                              .map(
+                                (participant) => ParticipantCard(
+                                  participant: participant,
+                                  heightImage: 175,
+                                ),
+                              )
+                              .toList(),
+                        );
+                      }
+                    },
+                  );
+                }
               },
             ),
           ),
