@@ -15,4 +15,21 @@ class Participant {
       this.sex,
       this.birthPlace,
       this.birthDate});
+
+  Participant copyWith(
+          {String? name,
+          String? address,
+          String? job,
+          String? imgByte,
+          String? sex,
+          String? birthPlace,
+          String? birthDate}) =>
+      Participant(
+          name: name ?? this.name,
+          address: address ?? this.address,
+          job: job ?? this.job,
+          imgByte: imgByte ?? this.imgByte,
+          sex: sex ?? this.sex,
+          birthPlace: birthPlace ?? this.birthPlace,
+          birthDate: birthDate ?? this.birthDate);
 }
