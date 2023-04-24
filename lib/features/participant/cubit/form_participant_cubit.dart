@@ -14,4 +14,13 @@ class FormParticipantCubit extends Cubit<FormParticipantState> {
 
     emit(state.copyWith(participant: edittedParticipant));
   }
+
+  void editData(String name, String address, String job) {
+    var participant = state.participant;
+
+    var edittedParticipant =
+        participant.copyWith(name: name, address: address, job: job);
+
+    emit(state.copyWith(participant: edittedParticipant));
+  }
 }

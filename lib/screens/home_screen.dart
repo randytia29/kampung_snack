@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kampung_snack/features/auth/cubit/logout_cubit.dart';
+import 'package:kampung_snack/features/participant/cubit/participant_cubit.dart';
 import 'package:kampung_snack/screens/form_screen.dart';
 import 'package:kampung_snack/screens/login_screen.dart';
 import 'package:kampung_snack/sl.dart';
@@ -54,7 +55,15 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           body: Column(
             children: [
-              const Expanded(child: Text('halo')),
+              Expanded(
+                child: BlocBuilder<ParticipantCubit, ParticipantState>(
+                  builder: (context, participantState) {
+                    final participants = participantState.participants;
+
+                    return Text('${participants.length}');
+                  },
+                ),
+              ),
               Container(
                 width: double.maxFinite,
                 padding: const EdgeInsets.all(16),

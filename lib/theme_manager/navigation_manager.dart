@@ -39,4 +39,6 @@ extension Navigate on BuildContext {
         ),
         (route) => false,
       );
+
+  void toBackScreen() => Navigator.of(this).pop();
 }

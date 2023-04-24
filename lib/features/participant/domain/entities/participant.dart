@@ -16,6 +16,26 @@ class Participant {
       this.birthPlace,
       this.birthDate});
 
+  factory Participant.fromJson(Map<String, dynamic> json) => Participant(
+        name: json['name'],
+        address: json['address'],
+        job: json['job'],
+        imgByte: json['img_byte'],
+        sex: json['sex'],
+        birthPlace: json['birth_place'],
+        birthDate: json['birth_date'],
+      );
+
+  Map<String, dynamic> toJson() => {
+        'name': name,
+        'address': address,
+        'job': job,
+        'img_byte': imgByte,
+        'sex': sex,
+        'birth_place': birthPlace,
+        'birth_date': birthDate,
+      };
+
   Participant copyWith(
           {String? name,
           String? address,

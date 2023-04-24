@@ -11,6 +11,7 @@ class CustomTextForm extends StatelessWidget {
     this.textInputAction,
     required this.title,
     this.textInputType,
+    this.hintText,
   }) : super(key: key);
 
   final TextEditingController controller;
@@ -19,6 +20,7 @@ class CustomTextForm extends StatelessWidget {
   final TextInputAction? textInputAction;
   final String title;
   final TextInputType? textInputType;
+  final String? hintText;
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +41,7 @@ class CustomTextForm extends StatelessWidget {
             obscureText: obscureText,
             controller: controller,
             decoration: InputDecoration(
-              hintText: 'Isi apa saja',
+              hintText: hintText,
               hintStyle: TextStyle(color: ColorManager.grey, fontSize: 16),
               fillColor: ColorManager.white,
               filled: true,

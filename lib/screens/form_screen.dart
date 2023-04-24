@@ -1,15 +1,16 @@
-import 'dart:typed_data';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:kampung_snack/features/participant/cubit/form_participant_cubit.dart';
+import 'package:kampung_snack/features/participant/cubit/participant_cubit.dart';
 import 'package:kampung_snack/sl.dart';
-import 'package:kampung_snack/theme_manager/asset_manager.dart';
-import 'package:kampung_snack/theme_manager/color_manager.dart';
+import 'package:kampung_snack/theme_manager/navigation_manager.dart';
+
 import 'package:kampung_snack/theme_manager/space_manager.dart';
 import 'package:kampung_snack/utils/image_pick_service.dart';
 import 'package:kampung_snack/widgets/custom_button.dart';
+import 'package:kampung_snack/widgets/custom_text_form.dart';
+
+import '../widgets/photo_participant.dart';
 
 class FormScreen extends StatefulWidget {
   const FormScreen({super.key});
@@ -19,18 +20,28 @@ class FormScreen extends StatefulWidget {
 }
 
 class _FormScreenState extends State<FormScreen> {
+  final _formKey = GlobalKey<FormState>();
+  late TextEditingController _nameController;
+  late TextEditingController _addressController;
+  late TextEditingController _jobController;
   late ImagePickService _imagePickService;
   late FormParticipantCubit _formParticipantCubit;
 
   @override
   void initState() {
     super.initState();
+    _nameController = TextEditingController();
+    _addressController = TextEditingController();
+    _jobController = TextEditingController();
     _imagePickService = sl<ImagePickService>();
     _formParticipantCubit = sl<FormParticipantCubit>();
   }
 
   @override
   void dispose() {
+    _nameController.dispose();
+    _addressController.dispose();
+    _jobController.dispose();
     _formParticipantCubit.close();
     super.dispose();
   }
@@ -40,78 +51,76 @@ class _FormScreenState extends State<FormScreen> {
     return Scaffold(
       body: BlocProvider(
         create: (context) => _formParticipantCubit,
-        child: Center(
-          child: Column(
-            children: [
-              Stack(
-                alignment: AlignmentDirectional.bottomCenter,
-                clipBehavior: Clip.none,
-                children: [
-                  BlocBuilder<FormParticipantCubit, FormParticipantState>(
-                    builder: (context, formParticipantState) {
-                      final image = formParticipantState.participant.imgByte;
+        child: Form(
+          key: _formKey,
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                80.0.spaceY,
+                PhotoParticipant(
+                  imagePickService: _imagePickService,
+                  formParticipantCubit: _formParticipantCubit,
+                ),
+                40.0.spaceY,
+                CustomTextForm(
+                  controller: _nameController,
+                  title: 'Nama',
+                  textInputAction: TextInputAction.next,
+                  validate: (value) {
+                    if ((value ?? '').isEmpty) {
+                      return 'Isi nama';
+                    } else {
+                      return null;
+                    }
+                  },
+                ),
+                24.0.spaceY,
+                CustomTextForm(
+                  controller: _addressController,
+                  title: 'Alamat',
+                  textInputAction: TextInputAction.next,
+                  validate: (value) {
+                    if ((value ?? '').isEmpty) {
+                      return 'Isi alamat';
+                    } else {
+                      return null;
+                    }
+                  },
+                ),
+                24.0.spaceY,
+                CustomTextForm(
+                  controller: _jobController,
+                  title: 'Pekerjaan',
+                  textInputAction: TextInputAction.next,
+                  validate: (value) {
+                    if ((value ?? '').isEmpty) {
+                      return 'Isi pekerjaan';
+                    } else {
+                      return null;
+                    }
+                  },
+                ),
+                32.0.spaceY,
+                CustomButton(
+                  text: 'Simpan',
+                  onTap: () async {
+                    if ((_formKey.currentState ?? FormState()).validate()) {
+                      _formParticipantCubit.editData(_nameController.text,
+                          _addressController.text, _jobController.text);
 
-                      return Container(
-                        width: 200,
-                        height: 200,
-                        decoration: BoxDecoration(
-                          border: Border.all(color: ColorManager.grey),
-                        ),
-                        child: image == null
-                            ? Image.asset(
-                                AssetManager.noImage,
-                                fit: BoxFit.cover,
-                              )
-                            : Image.memory(
-                                Uint8List.fromList(image.codeUnits),
-                                fit: BoxFit.cover,
-                              ),
-                      );
-                    },
-                  ),
-                  Positioned(
-                    bottom: -24,
-                    child: CircleAvatar(
-                      backgroundColor: ColorManager.grey,
-                      child: IconButton(
-                        onPressed: () async {
-                          final byteFile = await _imagePickService
-                              .pickMobileImage(ImageSource.camera);
+                      final participant =
+                          _formParticipantCubit.state.participant;
 
-                          if (byteFile == null) {
-                            return;
-                          }
+                      context
+                          .read<ParticipantCubit>()
+                          .addParticipant(participant);
 
-                          final imgString = String.fromCharCodes(byteFile);
-
-                          _formParticipantCubit.editImage(imgString);
-                        },
-                        icon: const Icon(Icons.camera_alt),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              40.0.spaceY,
-              CustomButton(
-                text: 'pick image',
-                onTap: () async {
-                  // final imagePick = sl<ImagePickService>();
-
-                  // final file = await imagePick.pickImage(ImageSource.gallery);
-
-                  // if (file == null) {
-                  //   return;
-                  // }
-
-                  // setState(() {
-                  //   selectedFile = file;
-                  // });
-
-                  // log(file.path);
-                },
-              )
-            ],
+                      context.toBackScreen();
+                    }
+                  },
+                )
+              ],
+            ),
           ),
         ),
       ),

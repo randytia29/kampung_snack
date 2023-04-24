@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:kampung_snack/features/participant/cubit/participant_cubit.dart';
 import 'package:kampung_snack/screens/home_screen.dart';
 import 'package:kampung_snack/screens/login_screen.dart';
 import 'package:kampung_snack/sl.dart';
@@ -13,9 +15,12 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     final token = sl<SharedPref>().getAccessToken();
 
-    return MaterialApp(
-      theme: getApplicationThemeData(),
-      home: token == null ? const LoginScreen() : const HomeScreen(),
+    return BlocProvider(
+      create: (context) => sl<ParticipantCubit>(),
+      child: MaterialApp(
+        theme: getApplicationThemeData(),
+        home: token == null ? const LoginScreen() : const HomeScreen(),
+      ),
     );
   }
 }

@@ -41,6 +41,7 @@ class LoginMobilePage extends StatelessWidget {
             }
           },
           title: 'Username',
+          hintText: 'Isi apa saja',
         ),
         24.0.spaceY,
         CustomTextForm(
@@ -54,6 +55,7 @@ class LoginMobilePage extends StatelessWidget {
             }
           },
           title: 'Password',
+          hintText: 'Isi apa saja',
         ),
         24.0.spaceY,
         CustomButton(
