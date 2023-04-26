@@ -9,6 +9,8 @@ import '../widgets/login_mobile_page.dart';
 import '../widgets/login_web_page.dart';
 
 class LoginScreen extends StatefulWidget {
+  static const String routeName = '/login';
+
   const LoginScreen({super.key});
 
   @override
@@ -48,7 +50,7 @@ class _LoginScreenState extends State<LoginScreen> {
         child: BlocListener<LoginCubit, LoginState>(
           listener: (BuildContext context, loginState) {
             if (loginState is LoginSuccess) {
-              context.toJumpScreen(const HomeScreen());
+              context.toJumpScreen(HomeScreen.routeName);
             }
           },
           child: Form(

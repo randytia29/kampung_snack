@@ -69,7 +69,7 @@ class HomeMobilePage extends StatelessWidget {
             alignment: Alignment.centerRight,
             child: CustomButton(
               text: 'Tambah peserta',
-              onTap: () => context.toScreen(const FormScreen()),
+              onTap: () => context.toScreen(FormScreen.routeName),
             ),
           )
         ],

@@ -10,6 +10,8 @@ import '../widgets/home_mobile_page.dart';
 import '../widgets/home_web_page.dart';
 
 class HomeScreen extends StatefulWidget {
+  static const String routeName = '/home';
+
   const HomeScreen({super.key});
 
   @override
@@ -38,7 +40,7 @@ class _HomeScreenState extends State<HomeScreen> {
       child: BlocListener<LogoutCubit, LogoutState>(
         listener: (context, logoutState) {
           if (logoutState is LogoutSuccess) {
-            context.toLoginScreen(const LoginScreen());
+            context.toLoginScreen(LoginScreen.routeName);
           }
         },
         child: kIsWeb

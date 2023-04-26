@@ -9,6 +9,8 @@ import '../widgets/form_mobile_page.dart';
 import '../widgets/form_web_page.dart';
 
 class FormScreen extends StatefulWidget {
+  static const String routeName = '/form';
+
   const FormScreen({super.key});
 
   @override

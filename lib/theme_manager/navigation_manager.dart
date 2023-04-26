@@ -1,24 +1,15 @@
 import 'package:flutter/material.dart';
 
 extension Navigate on BuildContext {
-  void toScreen(Widget screen) => Navigator.of(this).push(
-        MaterialPageRoute(
-          builder: (context) => screen,
-        ),
-      );
+  void toScreen(String routeName, {Object? arguments}) =>
+      Navigator.of(this).pushNamed(routeName, arguments: arguments);
 
-  void toJumpScreen(Widget screen) => Navigator.of(this).pushReplacement(
-        MaterialPageRoute(
-          builder: (context) => screen,
-        ),
-      );
+  void toJumpScreen(String routeName, {Object? arguments}) =>
+      Navigator.of(this).pushReplacementNamed(routeName, arguments: arguments);
 
-  void toLoginScreen(Widget screen) => Navigator.of(this).pushAndRemoveUntil(
-        MaterialPageRoute(
-          builder: (context) => screen,
-        ),
-        (route) => false,
-      );
+  void toLoginScreen(String routeName, {Object? arguments}) =>
+      Navigator.of(this).pushNamedAndRemoveUntil(routeName, (route) => false,
+          arguments: arguments);
 
   void toBackScreen() => Navigator.of(this).pop();
 }

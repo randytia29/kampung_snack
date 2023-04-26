@@ -24,7 +24,8 @@ class ParticipantCard extends StatelessWidget {
     final image = participant.imgByte;
 
     return InkWell(
-      onTap: () => context.toScreen(DetailScreen(participant: participant)),
+      onTap: () =>
+          context.toScreen(DetailScreen.routeName, arguments: participant),
       child: Card(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,

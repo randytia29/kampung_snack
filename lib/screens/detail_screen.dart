@@ -5,6 +5,8 @@ import 'package:kampung_snack/widgets/detail_web_page.dart';
 import '../widgets/detail_mobile_page.dart';
 
 class DetailScreen extends StatelessWidget {
+  static const String routeName = '/detail';
+
   const DetailScreen({super.key, required this.participant});
 
   final Participant participant;
